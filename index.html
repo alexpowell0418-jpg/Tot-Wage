@@ -178,6 +178,10 @@ background:#102919;
 color:var(--text);
 }
 .readme{padding:24px}
+.readme p,.readme li{
+color:var(--muted);
+line-height:1.45;
+}
 .close{
 width:100%;
 margin-top:12px;
@@ -234,8 +238,13 @@ font-size:13px;
 <dialog id="readme">
 <div class="readme">
 <h2>Potato Cathedral</h2>
+
 <p>Tot Wage converts dollar prices into symbolic potatoes and tater tots.</p>
+
+<p>Potato Cathedral began with a real workplace observation: a 30 lb box of tater tots costing approximately $150. From this, the estimated cost of an individual tater tot was calculated at roughly 3.5 cents.</p>
+
 <p>The logistics visualization scales upward:</p>
+
 <ul>
 <li>🥔 loose potatoes</li>
 <li>🥔👜 20 lb bags</li>
@@ -243,7 +252,9 @@ font-size:13px;
 <li>🚚 trucks</li>
 <li>🚢 ships</li>
 </ul>
+
 <p>The point is not strict grocery pricing. It is a playful and serious way to visualize labor, scale, infrastructure, and abundance beneath the Veil of Plenty.</p>
+
 <button class="close" id="closeButton">Return</button>
 </div>
 </dialog>
@@ -318,7 +329,6 @@ if(ships>0) add("🚢 " + ships.toLocaleString() + " ship" + (ships!==1?"s":""))
 if(trucks>0) add("🚚 " + trucks.toLocaleString() + " truck" + (trucks!==1?"s":""));
 if(pallets>0) add("📦 " + pallets.toLocaleString() + " pallet" + (pallets!==1?"s":""));
 if(bags>0) add("🥔👜 " + bags.toLocaleString() + " bag" + (bags!==1?"s":""));
-if(potatoCount>0) add("🥔 " + potatoCount.toLocaleString() + " potatoes");
 }
 
 amount.addEventListener("input", render);
