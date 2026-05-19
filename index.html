@@ -251,6 +251,8 @@ font-size:13px;
 <li>📦 pallets</li>
 <li>🚚 trucks</li>
 <li>🚢 ships</li>
+<li>⚓ ports</li>
+<li>🏙️ cities</li>
 </ul>
 
 <p>The point is not strict grocery pricing. It is a playful and serious way to visualize labor, scale, infrastructure, and abundance beneath the Veil of Plenty.</p>
@@ -305,8 +307,12 @@ var bagSize = 80;
 var palletSize = 3200;
 var truckSize = 64000;
 var shipSize = 7680000;
+var portSize = shipSize * 10;
+var citySize = portSize * 10;
 
-var ships = Math.floor(potatoCount / shipSize);
+var cities = Math.floor(potatoCount / citySize);
+var ports = Math.floor((potatoCount % citySize) / portSize);
+var ships = Math.floor((potatoCount % portSize) / shipSize);
 var trucks = Math.floor((potatoCount % shipSize) / truckSize);
 var pallets = Math.floor((potatoCount % truckSize) / palletSize);
 var bags = Math.floor((potatoCount % palletSize) / bagSize);
@@ -325,6 +331,8 @@ el.textContent = label;
 logistics.appendChild(el);
 }
 
+if(cities>0) add("🏙️ " + cities.toLocaleString() + " cit" + (cities===1?"y":"ies"));
+if(ports>0) add("⚓ " + ports.toLocaleString() + " port" + (ports!==1?"s":""));
 if(ships>0) add("🚢 " + ships.toLocaleString() + " ship" + (ships!==1?"s":""));
 if(trucks>0) add("🚚 " + trucks.toLocaleString() + " truck" + (trucks!==1?"s":""));
 if(pallets>0) add("📦 " + pallets.toLocaleString() + " pallet" + (pallets!==1?"s":""));
