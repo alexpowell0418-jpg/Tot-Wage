@@ -1,408 +1,348 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#12351f" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Tot Wage" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
-  <title>Tot Wage</title>
-  <style>
-    :root {
-      --bg: #0b1d12;
-      --text: #f4fff5;
-      --muted: #b8d8c1;
-      --green: #80d982;
-      --gold: #eccb78;
-      --shadow: rgba(0,0,0,.35);
-    }
-
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-    html, body {
-      margin: 0;
-      min-height: 100%;
-      background:
-        radial-gradient(circle at 50% 0%, #26633b 0%, #112b1b 44%, var(--bg) 100%);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-    }
-
-    body {
-      min-height: 100dvh;
-      display: grid;
-      place-items: center;
-      padding: max(22px, env(safe-area-inset-top)) 18px max(22px, env(safe-area-inset-bottom));
-    }
-
-    main { width: min(520px, 100%); }
-
-    .app {
-      border-radius: 36px;
-      padding: 24px;
-      background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.035));
-      border: 1px solid rgba(255,255,255,.14);
-      box-shadow: 0 26px 70px var(--shadow);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 18px;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(44px, 13vw, 72px);
-      letter-spacing: -2.2px;
-      line-height: .9;
-    }
-
-    .tagline {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.35;
-    }
-
-    .help {
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.15);
-      background: rgba(255,255,255,.12);
-      color: var(--text);
-      font-weight: 900;
-      font-size: 24px;
-      cursor: pointer;
-      flex: 0 0 auto;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 9px;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .input-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 13px 16px;
-      border-radius: 24px;
-      background: rgba(0,0,0,.28);
-      border: 1px solid rgba(255,255,255,.12);
-    }
-
-    .dollar {
-      color: var(--gold);
-      font-size: 31px;
-      font-weight: 850;
-    }
-
-    input {
-      width: 100%;
-      border: 0;
-      outline: 0;
-      background: transparent;
-      color: var(--text);
-      font-size: 42px;
-      line-height: 1.05;
-      font-weight: 820;
-      letter-spacing: -1px;
-      appearance: textfield;
-      -moz-appearance: textfield;
-    }
-
-    input::placeholder { color: rgba(244,255,245,.3); }
-
-    .result {
-      margin-top: 20px;
-      padding: 22px;
-      border-radius: 28px;
-      background: rgba(0,0,0,.2);
-      border: 1px solid rgba(255,255,255,.08);
-      transition: transform .18s ease;
-    }
-
-    .result.flash { transform: translateY(-3px); }
-
-    .money {
-      color: var(--muted);
-      font-size: 16px;
-      margin-bottom: 14px;
-    }
-
-    .potatoes {
-      margin: 0;
-      font-size: clamp(34px, 10vw, 56px);
-      font-weight: 900;
-      letter-spacing: -1.5px;
-      line-height: 1.02;
-    }
-
-    .tots {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 20px;
-      line-height: 1.25;
-    }
-
-    .pile {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      min-height: 48px;
-      align-content: flex-start;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 32% 28%, #f3dba4 0 16%, #cc914b 58%, #8e5522 100%);
-      transform: rotate(-16deg);
-      opacity: .96;
-    }
-
-    .cap {
-      min-height: 18px;
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .quote {
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,.1);
-      color: #ffe3a4;
-      font-size: 17px;
-      line-height: 1.36;
-    }
-
-    .copy {
-      margin-top: 16px;
-      width: 100%;
-      border: 0;
-      border-radius: 20px;
-      padding: 15px 16px;
-      background: var(--green);
-      color: #07210d;
-      font-size: 17px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-
-    dialog {
-      width: min(530px, calc(100% - 28px));
-      max-height: 86dvh;
-      overflow: auto;
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 30px;
-      background: #102919;
-      color: var(--text);
-      padding: 0;
-      box-shadow: 0 24px 90px rgba(0,0,0,.6);
-    }
-
-    dialog::backdrop {
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(7px);
-      -webkit-backdrop-filter: blur(7px);
-    }
-
-    .readme { padding: 24px; }
-    .readme h2 { margin: 0 0 10px; font-size: 32px; letter-spacing: -.8px; }
-    .readme p, .readme li { color: var(--muted); line-height: 1.48; font-size: 16px; }
-    .readme strong { color: var(--text); }
-
-    code {
-      color: #ffe3a4;
-      background: rgba(0,0,0,.28);
-      padding: 2px 6px;
-      border-radius: 8px;
-    }
-
-    .close {
-      width: 100%;
-      margin-top: 12px;
-      border: 0;
-      border-radius: 20px;
-      padding: 15px 16px;
-      background: var(--green);
-      color: #07210d;
-      font-size: 17px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-
-    footer {
-      margin-top: 14px;
-      text-align: center;
-      color: rgba(244,255,245,.55);
-      font-size: 13px;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tot Wage</title>
+<meta name="theme-color" content="#12351f">
+<style>
+:root{
+--bg:#0b1d12;
+--text:#f4fff5;
+--muted:#b8d8c1;
+--green:#80d982;
+--gold:#eccb78;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+margin:0;
+min-height:100%;
+background:radial-gradient(circle at 50% 0%,#26633b 0%,#112b1b 44%,var(--bg) 100%);
+color:var(--text);
+font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+}
+body{
+display:grid;
+place-items:center;
+padding:max(22px,env(safe-area-inset-top)) 18px max(22px,env(safe-area-inset-bottom));
+}
+main{width:min(520px,100%)}
+.app{
+border-radius:36px;
+padding:24px;
+background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.035));
+border:1px solid rgba(255,255,255,.14);
+box-shadow:0 26px 70px rgba(0,0,0,.35);
+backdrop-filter:blur(16px);
+}
+header{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:18px;
+margin-bottom:24px;
+}
+h1{
+margin:0;
+font-size:clamp(44px,13vw,72px);
+letter-spacing:-2.2px;
+line-height:.9;
+}
+.tagline{
+margin-top:12px;
+color:var(--muted);
+font-size:16px;
+line-height:1.35;
+}
+.help{
+width:44px;
+height:44px;
+border-radius:999px;
+border:1px solid rgba(255,255,255,.15);
+background:rgba(255,255,255,.12);
+color:var(--text);
+font-size:24px;
+font-weight:900;
+cursor:pointer;
+}
+label{
+display:block;
+margin-bottom:9px;
+color:var(--muted);
+font-weight:700;
+}
+.input-wrap{
+display:flex;
+align-items:center;
+gap:10px;
+padding:13px 16px;
+border-radius:24px;
+background:rgba(0,0,0,.28);
+border:1px solid rgba(255,255,255,.12);
+}
+.dollar{
+color:var(--gold);
+font-size:31px;
+font-weight:850;
+}
+input{
+width:100%;
+border:0;
+outline:0;
+background:transparent;
+color:var(--text);
+font-size:42px;
+font-weight:820;
+letter-spacing:-1px;
+}
+.result{
+margin-top:20px;
+padding:22px;
+border-radius:28px;
+background:rgba(0,0,0,.2);
+border:1px solid rgba(255,255,255,.08);
+}
+.money{
+color:var(--muted);
+font-size:16px;
+margin-bottom:14px;
+}
+.potatoes{
+margin:0;
+font-size:clamp(34px,10vw,56px);
+font-weight:900;
+line-height:1.02;
+letter-spacing:-1.5px;
+}
+.tots{
+margin-top:12px;
+color:var(--muted);
+font-size:20px;
+}
+.pile{
+margin-top:20px;
+display:flex;
+flex-wrap:wrap;
+gap:5px;
+min-height:48px;
+}
+.dot{
+width:10px;
+height:10px;
+border-radius:999px;
+background:radial-gradient(circle at 32% 28%,#f3dba4 0 16%,#cc914b 58%,#8e5522 100%);
+transform:rotate(-16deg);
+}
+.logistics{
+margin-top:14px;
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+}
+.logistic{
+display:inline-flex;
+align-items:center;
+padding:5px 10px;
+border-radius:999px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+font-size:14px;
+font-weight:800;
+color:#f7f1d5;
+}
+.quote{
+margin-top:18px;
+padding-top:18px;
+border-top:1px solid rgba(255,255,255,.1);
+color:#ffe3a4;
+font-size:17px;
+line-height:1.36;
+}
+.copy{
+margin-top:16px;
+width:100%;
+border:0;
+border-radius:20px;
+padding:15px 16px;
+background:var(--green);
+color:#07210d;
+font-size:17px;
+font-weight:900;
+cursor:pointer;
+}
+dialog{
+width:min(530px,calc(100% - 28px));
+border:1px solid rgba(255,255,255,.16);
+border-radius:30px;
+background:#102919;
+color:var(--text);
+}
+.readme{padding:24px}
+.close{
+width:100%;
+margin-top:12px;
+border:0;
+border-radius:20px;
+padding:15px 16px;
+background:var(--green);
+color:#07210d;
+font-size:17px;
+font-weight:900;
+}
+footer{
+margin-top:14px;
+text-align:center;
+color:rgba(244,255,245,.55);
+font-size:13px;
+}
+</style>
 </head>
-
 <body>
-  <main>
-    <section class="app">
-      <header>
-        <div>
-          <h1>Tot<br>Wage</h1>
-          <div class="tagline">Dollars into symbolic potatoes, beneath the Veil of Plenty.</div>
-        </div>
-        <button class="help" id="helpButton" aria-label="Read about Potato Cathedral">?</button>
-      </header>
+<main>
+<section class="app">
+<header>
+<div>
+<h1>Tot<br>Wage</h1>
+<div class="tagline">Dollars into symbolic potatoes beneath the Veil of Plenty.</div>
+</div>
+<button class="help" id="helpButton">?</button>
+</header>
 
-      <label for="amount">Enter dollar amount</label>
-      <div class="input-wrap">
-        <span class="dollar">$</span>
-        <input id="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="8.68" />
-      </div>
+<label for="amount">Enter dollar amount</label>
+<div class="input-wrap">
+<span class="dollar">$</span>
+<input id="amount" type="text" inputmode="decimal" placeholder="8.68">
+</div>
 
-      <section class="result" id="result">
-        <div class="money" id="money">💵 $0.00</div>
-        <p class="potatoes" id="potatoes">🥔 0 symbolic potatoes</p>
-        <div class="tots" id="tots">🥔≈ 0 symbolic tater tots</div>
-        <div class="pile" id="pile" aria-hidden="true"></div>
-        <div class="cap" id="cap"></div>
-        <div class="quote">“How much embodied life can one hour of labor access?”<br>— Potato Cathedral</div>
-      </section>
+<section class="result">
+<div class="money" id="money">💵 $0.00</div>
+<p class="potatoes" id="potatoes">🥔 0 symbolic potatoes</p>
+<div class="tots" id="tots">🥔≈ 0 symbolic tater tots</div>
 
-      <button class="copy" id="copyButton">Copy result</button>
-    </section>
+<div class="pile" id="pile"></div>
+<div class="logistics" id="logistics"></div>
 
-    <footer>1 symbolic potato ≈ $1.388 · 1 tot ≈ $0.0347</footer>
-  </main>
+<div class="quote">“How much embodied life can one hour of labor access?”<br>— Potato Cathedral</div>
+</section>
 
-  <dialog id="readme">
-    <div class="readme">
-      <h2>Potato Cathedral</h2>
-      <p><strong>Tot Wage</strong> converts dollar prices into symbolic potatoes and tater tots.</p>
-      <p>The working formula comes from a 30 lb box of tater tots costing $150.</p>
-      <ul>
-        <li>30 lb = 480 oz</li>
-        <li>Estimated 9 tots per ounce = 4,320 tots</li>
-        <li><code>$150 ÷ 4,320 ≈ $0.0347 per tot</code></li>
-        <li>Estimated 40 tots per potato</li>
-        <li><code>1 symbolic potato ≈ $1.388</code></li>
-      </ul>
-      <p>So: <code>symbolic potatoes = dollars ÷ 1.388</code></p>
-      <p>The point is not strict grocery pricing. It is a playful and serious way to ask how money, labor, food, access, comfort, waste, and abundance remain tied together beneath the Veil of Plenty.</p>
-      <button class="close" id="closeButton">Return</button>
-    </div>
-  </dialog>
+<button class="copy" id="copyButton">Copy result</button>
+</section>
 
-  <script>
-    (function () {
-      "use strict";
-      var TOT_COST = 0.0347;
-      var POTATO_COST = TOT_COST * 40;
-      var PILE_CAP = 100;
+<footer>1 symbolic potato ≈ $1.388 · 1 tot ≈ $0.0347</footer>
+</main>
 
-      var amount = document.getElementById("amount");
-      var money = document.getElementById("money");
-      var potatoesEl = document.getElementById("potatoes");
-      var totsEl = document.getElementById("tots");
-      var pile = document.getElementById("pile");
-      var cap = document.getElementById("cap");
-      var result = document.getElementById("result");
-      var copyButton = document.getElementById("copyButton");
-      var helpButton = document.getElementById("helpButton");
-      var readme = document.getElementById("readme");
-      var closeButton = document.getElementById("closeButton");
+<dialog id="readme">
+<div class="readme">
+<h2>Potato Cathedral</h2>
+<p>Tot Wage converts dollar prices into symbolic potatoes and tater tots.</p>
+<p>The logistics visualization scales upward:</p>
+<ul>
+<li>🥔 loose potatoes</li>
+<li>🥔👜 20 lb bags</li>
+<li>📦 pallets</li>
+<li>🚚 trucks</li>
+<li>🚢 ships</li>
+</ul>
+<p>The point is not strict grocery pricing. It is a playful and serious way to visualize labor, scale, infrastructure, and abundance beneath the Veil of Plenty.</p>
+<button class="close" id="closeButton">Return</button>
+</div>
+</dialog>
 
-      function parseMoney(value) {
-        var cleaned = String(value || "").replace(/[^0-9.]/g, "");
-        var firstDot = cleaned.indexOf(".");
-        if (firstDot !== -1) {
-          cleaned = cleaned.slice(0, firstDot + 1) + cleaned.slice(firstDot + 1).replace(/\./g, "");
-        }
-        var n = parseFloat(cleaned);
-        return isNaN(n) ? 0 : n;
-      }
+<script>
+(function(){
+"use strict";
 
-      function formatNumber(n, digits) {
-        return n.toLocaleString(undefined, {
-          minimumFractionDigits: digits,
-          maximumFractionDigits: digits
-        });
-      }
+var TOT_COST = 0.0347;
+var POTATO_COST = TOT_COST * 40;
 
-      function render() {
-        var dollars = parseMoney(amount.value);
-        var potatoes = dollars / POTATO_COST;
-        var tots = dollars / TOT_COST;
+var amount = document.getElementById("amount");
+var money = document.getElementById("money");
+var potatoesEl = document.getElementById("potatoes");
+var totsEl = document.getElementById("tots");
+var pile = document.getElementById("pile");
+var logistics = document.getElementById("logistics");
+var copyButton = document.getElementById("copyButton");
 
-        money.textContent = "💵 $" + formatNumber(dollars, 2);
-        potatoesEl.textContent = "🥔 " + formatNumber(potatoes, 2) + " symbolic potatoes";
-        totsEl.textContent = "🥔≈ " + Math.round(tots).toLocaleString() + " symbolic tater tots";
+function parseMoney(value){
+var cleaned = String(value || "").replace(/[^0-9.]/g,"");
+var n = parseFloat(cleaned);
+return isNaN(n) ? 0 : n;
+}
 
-        var count = Math.min(Math.round(potatoes), PILE_CAP);
-        pile.innerHTML = "";
-        for (var i = 0; i < count; i++) {
-          var dot = document.createElement("span");
-          dot.className = "dot";
-          pile.appendChild(dot);
-        }
-        cap.textContent = potatoes > PILE_CAP ? "Pile capped at 100 dots. Enormity implied." : "";
+function format(n,d){
+return n.toLocaleString(undefined,{
+minimumFractionDigits:d,
+maximumFractionDigits:d
+});
+}
 
-        result.classList.remove("flash");
-        void result.offsetWidth;
-        result.classList.add("flash");
-      }
+function render(){
+var dollars = parseMoney(amount.value);
+var potatoes = dollars / POTATO_COST;
+var tots = dollars / TOT_COST;
 
-      function copyResult() {
-        var text = [
-          money.textContent,
-          potatoesEl.textContent,
-          totsEl.textContent,
-          "“How much embodied life can one hour of labor access?” — Potato Cathedral"
-        ].join("\\n");
+money.textContent = "💵 $" + format(dollars,2);
+potatoesEl.textContent = "🥔 " + format(potatoes,2) + " symbolic potatoes";
+totsEl.textContent = "🥔≈ " + Math.round(tots).toLocaleString() + " symbolic tater tots";
 
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function () {
-            copyButton.textContent = "Copied";
-            setTimeout(function () { copyButton.textContent = "Copy result"; }, 900);
-          }).catch(function () {
-            window.prompt("Copy result:", text);
-          });
-        } else {
-          window.prompt("Copy result:", text);
-        }
-      }
+pile.innerHTML = "";
+logistics.innerHTML = "";
 
-      amount.addEventListener("input", render);
-      amount.addEventListener("keyup", render);
-      amount.addEventListener("change", render);
-      copyButton.addEventListener("click", copyResult);
+var potatoCount = Math.round(potatoes);
 
-      helpButton.addEventListener("click", function () {
-        if (readme.showModal) readme.showModal();
-        else alert("Potato Cathedral\\n\\nSymbolic potatoes = dollars ÷ 1.388\\nTots = dollars ÷ 0.0347");
-      });
+var bagSize = 80;
+var palletSize = 3200;
+var truckSize = 64000;
+var shipSize = 7680000;
 
-      closeButton.addEventListener("click", function () { readme.close(); });
-      render();
+var ships = Math.floor(potatoCount / shipSize);
+var trucks = Math.floor((potatoCount % shipSize) / truckSize);
+var pallets = Math.floor((potatoCount % truckSize) / palletSize);
+var bags = Math.floor((potatoCount % palletSize) / bagSize);
+var loose = potatoCount % bagSize;
 
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", function () {
-          navigator.serviceWorker.register("./sw.js").catch(function () {});
-        });
-      }
-    })();
-  </script>
+for(var i=0;i<Math.min(loose,100);i++){
+var dot = document.createElement("span");
+dot.className = "dot";
+pile.appendChild(dot);
+}
+
+function add(label){
+var el = document.createElement("span");
+el.className = "logistic";
+el.textContent = label;
+logistics.appendChild(el);
+}
+
+if(ships>0) add("🚢 " + ships.toLocaleString() + " ship" + (ships!==1?"s":""));
+if(trucks>0) add("🚚 " + trucks.toLocaleString() + " truck" + (trucks!==1?"s":""));
+if(pallets>0) add("📦 " + pallets.toLocaleString() + " pallet" + (pallets!==1?"s":""));
+if(bags>0) add("🥔👜 " + bags.toLocaleString() + " bag" + (bags!==1?"s":""));
+if(potatoCount>0) add("🥔 " + potatoCount.toLocaleString() + " potatoes");
+}
+
+amount.addEventListener("input", render);
+
+copyButton.addEventListener("click", function(){
+var text = [
+money.textContent,
+potatoesEl.textContent,
+totsEl.textContent
+].join("\n");
+
+navigator.clipboard.writeText(text).catch(function(){});
+});
+
+document.getElementById("helpButton").addEventListener("click", function(){
+document.getElementById("readme").showModal();
+});
+
+document.getElementById("closeButton").addEventListener("click", function(){
+document.getElementById("readme").close();
+});
+
+render();
+})();
+</script>
 </body>
 </html>
